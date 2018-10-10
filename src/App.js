@@ -30,7 +30,7 @@ class App extends Component {
     let match = false;
     moment.defaultFormat = "DD/MM/YYYY";
     alert("Fetch API");
-    fetch('http://uinames.com/api/?ext&amount=200')
+    fetch('https://uinames.com/api/?ext&amount=200')
       .then(response => response.json())
       .then(data => {
         alert("Fetch Completed.");
