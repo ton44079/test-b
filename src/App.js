@@ -4,12 +4,12 @@ import './App.css';
 import moment from 'moment';
 
 const Card = (data) => {
-  
+
   return (
     <div className="card">
       <img src={data.photo} alt={data.name} className="card-img-top" />
       <div className="card-body">
-        <h5 className="card-title">{data.name}</h5>
+        <h5 className="card-title">{data.name||data.surname}</h5>
       </div>
     </div>
   )
@@ -27,43 +27,43 @@ class App extends Component {
   };
 
   componentDidMount() {
-    let match = false;
-    moment.defaultFormat = "DD/MM/YYYY";
-    alert("Fetch API");
-    fetch('https://uinames.com/api/?ext&amount=200')
+    // let match = false;
+
+   // alert("Fetch API");
+    fetch('https://uinames.com/api/?ext&amount=25')
       .then(response => response.json())
       .then(data => {
-        alert("Fetch Completed.");
-        var thisSunday = moment().day(0);
-        var month = thisSunday.month();
-        var dateDay = thisSunday.date();
-        console.log("Current Week :",thisSunday , month ,dateDay , thisSunday.day() );
+        // alert("Fetch Completed.");
+        // var thisSunday = moment().day(0);
+        // var month = thisSunday.month();
+        // var dateDay = thisSunday.date();
+        // console.log("Current Week :",thisSunday , month ,dateDay , thisSunday.day() );
         data.forEach((e) => {
-          let eDate = moment(e.birthday.dmy, "DD/MM/YYYY").year(thisSunday.year());
-          let eMonth = eDate.month();
-          let eDateDate = eDate.date();
+          let eDate = moment(e.birthday.dmy, "DD/MM/YYYY");//.year(thisSunday.year());
+          //  let eMonth = eDate.month();
+          // let eDateDate = eDate.date();
           //console.log( "Ele Date :",eDate , eMonth ,eDateDate );
-          if (month === eMonth && (eDateDate >= dateDay && eDateDate < (dateDay + 7))) {
-            match = true;
-            switch (eDate.day()) {
-              case 0: this.setState({ sun: [...this.state.sun, e] }); break;
-              case 1: this.setState({ mon: [...this.state.mon, e] }); break;
-              case 2: this.setState({ tue: [...this.state.tue, e] }); break;
-              case 3: this.setState({ wed: [...this.state.wed, e] }); break;
-              case 4: this.setState({ thu: [...this.state.thu, e] }); break;
-              case 5: this.setState({ fri: [...this.state.fri, e] }); break;
-              case 6: this.setState({ sat: [...this.state.sat, e] }); break;
-              default:
-                break;
-            }
+          // if (month === eMonth && (eDateDate >= dateDay && eDateDate < (dateDay + 7))) {
+          //  match = true;
+          switch (eDate.day()) {
+            case 0: this.setState({ sun: [...this.state.sun, e] }); break;
+            case 1: this.setState({ mon: [...this.state.mon, e] }); break;
+            case 2: this.setState({ tue: [...this.state.tue, e] }); break;
+            case 3: this.setState({ wed: [...this.state.wed, e] }); break;
+            case 4: this.setState({ thu: [...this.state.thu, e] }); break;
+            case 5: this.setState({ fri: [...this.state.fri, e] }); break;
+            case 6: this.setState({ sat: [...this.state.sat, e] }); break;
+            default:
+              break;
           }
+          // }
         });
-      }).then(()=>{
-        alert("Math :"+ match);
+      }).then(() => {
+        //alert("Math :"+ match);
         console.log(this.state);
       });
 
-     
+
   }
 
   render() {
@@ -90,11 +90,11 @@ class App extends Component {
               </td>
               <td>
                 {this.state.mon.map((el, i) => (
-                  <Card {...el}  key={i}></Card>
+                  <Card {...el} key={i}></Card>
                 ))}
               </td>
               <td>  {this.state.tue.map((el, i) => (
-                <Card {...el}  key={i}></Card>
+                <Card {...el} key={i}></Card>
               ))}</td>
               <td>  {this.state.wed.map((el, i) => (
                 <Card {...el} key={i}></Card>
